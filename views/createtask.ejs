@@ -1,0 +1,66 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+  <h1>Create Task</h1>
+
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-body">
+
+          <!-- Makes POST request to /tasks route -->
+          <form action="/createtasks" method="POST">
+            <div class="form-group">
+              <label for="slot">Slot</label>
+              <select class="form-control" name="slot" required>
+                <option value="A1">A1</option>
+                <option value="A2">A2</option>
+                <option value="B1">B1</option>
+                <option value="B2">B2</option>
+                <option value="C1">C1</option>
+                <option value="C2">C2</option>
+                <option value="D1">D1</option>
+                <option value="D2">D2</option>
+                <option value="E1">E1</option>
+                <option value="E2">E2</option>
+                <option value="F1">F1</option>
+                <option value="F2">F2</option>
+                <option value="G1">G1</option>
+                <option value="G2">G2</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="faculty">Faculty</label>
+              <input type="text" class="form-control" name="faculty">
+            </div>
+            <div class="form-group">
+              <label for="venue">Venue</label>
+              <select class="form-control" name="venue">
+                <option value="TT">TT</option>
+                <option value="SJT">SJT</option>
+                <option value="PRP">PRP</option>
+                <option value="MB">MB</option>
+                <option value="SMV">SMV</option>
+                <option value="CDM">CDM</option>
+                <option value="GDN">GDN</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="coursecode">Course Code</label>
+              <input type="text" class="form-control" name="coursecode" required>
+            </div>
+            
+            <!-- Assuming you have a way to identify the owner -->
+            <!-- Add hidden field for owner's ID -->
+            
+            <button type="submit" class="btn btn-dark">Create Task</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<%- include('partials/footer') %>

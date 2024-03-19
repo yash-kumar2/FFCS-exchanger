@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Task</title>
+</head>
+<body>
+    <h1>PROFILE</h1>
+
+    <div>
+        <p>Registration Number: <%= userData.regno %></p>
+        <p>Contact: <%= userData.contact %></p>
+        <p>Email: <%= userData.email %></p>
+    </div>
+    
+    <form action="/createTask" method="POST">
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName" name="taskName" required>
+        
+        <label for="completed">Completed:</label>
+        <select id="completed" name="completed" required>
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+
+        <button type="submit">Create Task</button>
+    </form>
+
+    <script>
+        function openTaskWindow() {
+            window.open('/createTaskWindow', 'Create Task', 'width=600,height=400');
+        }
+    </script>
+
+    <button onclick="openTaskWindow()">Create Task Window</button>
+
+ 
+</body>
+</html>
