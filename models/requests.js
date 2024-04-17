@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const Task = mongoose.model('Task', {
+const Requests = mongoose.model('Req', {
    
     to: {
         type: mongoose.Schema.Types.ObjectId,
@@ -12,8 +12,13 @@ const Task = mongoose.model('Task', {
         required: true,
         ref: 'User'
     },
+    for: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'task'
+    },
     
     
 })
 
-module.exports = Task
+module.exports = Requests

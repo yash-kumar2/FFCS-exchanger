@@ -13,6 +13,7 @@
         <a class="nav-link active" aria-current="page" href="/users/dashboard">Home</a>
         <a class="nav-link" href="/tasks">Find Slots</a>
         <a class="nav-link" href="/createtasks">Create Slots</a>
+        <a class="nav-link" href="/users/Requests">Exchange Requests</a>
         <a class="nav-link" href="/users/logout">Logout</a>
       </div>
     </div>
@@ -95,16 +96,38 @@
               <strong>Faculty:</strong> <%= task.faculty %><br>
             <% } %>
             <% if (task.venue) { %>
-              <strong>Venue:</strong> <%= task.venue %><br>
+              <strong>For Venue:</strong> <%= task.venue %><br>
             <% } %>
-            <strong>Course Code:</strong> <%= task.coursecode %><br>
-            <strong>Scheduled:</strong> <%= task.scheduled ? 'Yes' : 'No' %><br>
+          
             <strong>Contact:</strong> <%= task.contact %><br> <!-- Added contact field -->
+            <button onclick="Requesttask('<%= task.id %>')" class="btn btn-dark">Request</button>
           </li>
         <% }) %>
       </ul>
     </div>
   </div>
 </div>
+<script>
+  function Requesttask(taskId) {
+    console.log("sfdsf")
+    fetch(`/requesttask/${taskId}`, {
+      method: 'POST'
+    })
+    .then(response => {
+      if (response.ok) {
+        
+        location.reload(); // Reload the page to reflect changes
+      } else {
+       
+        alert('Error requesting task');
+      }
+    })
+    .catch(error => {
+      // Handle network error
+      console.error('Error:', error);
+      alert('Network error - Unable to delete task');
+    });
+  }
+</script>
 
 <%- include('partials/footer') %>

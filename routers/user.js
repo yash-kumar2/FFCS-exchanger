@@ -2,6 +2,7 @@ const express = require('express')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const Task = require('../models/task')
+const Req = require('../models/requests')
 
 const router = new express.Router()
 router.get('/users/dashboard',auth, async (req, res) => {
@@ -16,6 +17,43 @@ router.get('/users/dashboard',auth, async (req, res) => {
         //const tasks = await Task.find({})
         res.render('profile.ejs',{ userData: req.user,tasks:tasks })
         console.log(tasks)
+      
+    }
+        
+    
+    catch{
+    
+        res.redirect('/users/login');
+    }
+  });
+  router.get('/users/requests',auth, async (req, res) => {
+    try{console.log(req.user)
+        
+        const reqs=await Req.find({to:req.user.id})
+         var requests=[]
+        for(var i=0;i<reqs.length;i++){
+            const task1=await Task.findById(reqs[i].for)
+            const user=await User.findById(reqs[i].to)
+            var obj={
+                from:user.regno,
+                contact:user.contact,
+                slot:task1.slot,
+                venue:task1.venue,
+                
+            }
+            console.log(obj)
+            requests.push(obj)
+            console.log(requests)
+
+
+        }
+        
+        console.log(obj)
+        console.log("yash")
+        res.render('requests.ejs',{tasks:requests})
+        
+        //const tasks = await Task.find({})
+       
       
     }
         

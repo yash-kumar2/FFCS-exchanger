@@ -1,5 +1,6 @@
 const express = require('express')
 const Task = require('../models/task')
+const Req = require('../models/requests')
 const auth = require('../middleware/auth')
 const router = new express.Router()
 router.get('/createtasks',auth,async (req,res)=>{
@@ -103,5 +104,47 @@ router.delete('/tasks/:id', auth, async (req, res) => {
         res.status(500).send()
     }
 })
+router.post('/requesttask/:id', auth, async (req, res) => {
+    const tasks = await Task.findById(req.params.id)
+    const task = new Req({
+       for:req.params.id,
+       to:tasks.owner,
+       from:req.user.id,
+       
+    
+        
+    })
+    console.log(task)
+    //req.status(200)
+
+    try {
+        await task.save()
+        console.log(task)
+        res.redirect('/tasks')
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+// router.post('/requesttask/:id', auth, async (req, res) => {
+//     const tasks = await Task.findById(req.params.id)
+//     const task = new Req({
+//        for:req.params.id,
+//        to:tasks.owner,
+//        from:req.user.id,
+       
+    
+        
+//     })
+//     console.log(task)
+//     req.status(200)
+
+//     try {
+//         await task.save()
+//         console.log(task)
+//         res.redirect('/tasks')
+//     } catch (e) {
+//         res.status(400).send(e)
+//     }
+// })
 
 module.exports = router
