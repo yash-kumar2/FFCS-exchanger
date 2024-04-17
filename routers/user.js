@@ -1,6 +1,7 @@
 const express = require('express')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
+const Task = require('../models/task')
 
 const router = new express.Router()
 router.get('/users/dashboard',auth, async (req, res) => {
@@ -10,12 +11,17 @@ router.get('/users/dashboard',auth, async (req, res) => {
             contact: '1234567890',
             email: 'example@example.com'
         };
-        
-        res.render('profile.ejs',{ userData: req.user })
+
+        const tasks = await Task.find({owner:req.user.id})
+        //const tasks = await Task.find({})
+        res.render('profile.ejs',{ userData: req.user,tasks:tasks })
+        console.log(tasks)
+      
     }
         
     
     catch{
+    
         res.redirect('/users/login');
     }
   });
@@ -82,18 +88,19 @@ router.post('/users/login', async (req, res) => {
        
         res.redirect('/users/dashboard');
     } catch (e) {
+        
         res.redirect('/users/login');
     }
 })
 
-router.post('/users/logout', auth, async (req, res) => {
+router.get('/users/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token
         })
         await req.user.save()
 
-        res.send()
+        res.render('home.ejs')
     } catch (e) {
         res.status(500).send()
     }

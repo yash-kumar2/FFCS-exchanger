@@ -16,7 +16,7 @@ router.post('/createtasks', auth, async (req, res) => {
     try {
         await task.save()
         console.log(task)
-        res.status(201).send(task)
+        res.render('createtask.ejs')
     } catch (e) {
         res.status(400).send(e)
     }

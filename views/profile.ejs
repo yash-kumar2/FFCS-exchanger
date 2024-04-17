@@ -22,7 +22,7 @@
               <a class="nav-link active" aria-current="page" href="/users/dashboard">Home</a>
               <a class="nav-link" href="/tasks">Find Slots</a>
               <a class="nav-link" href="/createtasks">Create Slots</a>
-              <a class="nav-link" href="/">Switch accounts</a>
+              <a class="nav-link" href="/users/logout">Logout</a>
             
             </div>
           </div>
@@ -46,10 +46,56 @@
               </div>
             </div>
           </div>
+          <div class="container mt-5">
+            <h1>Your Slots</h1>
+          
+            <div class="row">
+              <div class="col-sm-12">
+                <ul class="list-group">
+                  <% tasks.forEach(function(task) { %>
+                    <li class="list-group-item">
+                      <strong>Slot:</strong> <%= task.slot %><br>
+                      <% if (task.faculty) { %>
+                        <strong>Faculty:</strong> <%= task.faculty %><br>
+                      <% } %>
+                      <% if (task.venue) { %>
+                        <strong>Venue:</strong> <%= task.venue %><br>
+                      <% } %>
+                      <strong>Course Code:</strong> <%= task.coursecode %><br>
+                      <strong>Scheduled:</strong> <%= task.scheduled ? 'Yes' : 'No' %><br>
+                      <strong>Contact:</strong> <%= task.contact %><br> <!-- Added contact field -->
+                      <button onclick="deleteTask('<%= task.id %>')" class="btn btn-danger">Delete</button>
+                    </li>
+                  <% }) %>
+                </ul>
+              </div>
+            </div>
+          </div>
 
 
    
-
+          <script>
+            function deleteTask(taskId) {
+              // Send a delete request to your server endpoint
+              fetch(`/tasks/${taskId}`, {
+                method: 'DELETE'
+              })
+              .then(response => {
+                if (response.ok) {
+                  // Task deleted successfully, update UI or reload the page
+                  location.reload(); // Reload the page to reflect changes
+                } else {
+                  // Handle error response, e.g., show an alert
+                  alert('Error deleting task');
+                }
+              })
+              .catch(error => {
+                // Handle network error
+                console.error('Error:', error);
+                alert('Network error - Unable to delete task');
+              });
+            }
+          </script>
  
 </body>
 </html>
