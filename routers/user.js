@@ -3,13 +3,14 @@ const User = require('../models/user')
 const auth = require('../middleware/auth')
 
 const router = new express.Router()
-router.get('/users/dashboard',auth, (req, res) => {
+router.get('/users/dashboard',auth, async (req, res) => {
     try{console.log(req.user)
         const userData = {
             regno: req.body.regno,
             contact: '1234567890',
             email: 'example@example.com'
         };
+        
         res.render('profile.ejs',{ userData: req.user })
     }
         
@@ -47,9 +48,9 @@ router.post('/users', async (req, res) => {
         }
         res.cookie('auth_token', token, {
             expires: new Date(Date.now() + 3600000), // Expires in 1 hour
-            httpOnly: true, // This prevents client-side JavaScript from accessing the cookie
+            httpOnly: true, 
             secure: true // This ensures the cookie is only sent over HTTPS
-            // You might need to adjust the 'secure' option based on your deployment environment
+    
         });
         console.log("user")
        
