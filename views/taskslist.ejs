@@ -100,6 +100,7 @@
             <% } %>
           
             <strong>Contact:</strong> <%= task.contact %><br> <!-- Added contact field -->
+            <input type="text" id=<%= task.id %> placeholder="Enter your message">
             <button onclick="Requesttask('<%= task.id %>')" class="btn btn-dark">Request</button>
           </li>
         <% }) %>
@@ -109,9 +110,14 @@
 </div>
 <script>
   function Requesttask(taskId) {
-    console.log("sfdsf")
+    const message = document.getElementById( taskId ).value;
+    console.log(message)
     fetch(`/requesttask/${taskId}`, {
-      method: 'POST'
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message }), // Send the message in the request body
     })
     .then(response => {
       if (response.ok) {

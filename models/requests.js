@@ -17,6 +17,9 @@ const Requests = mongoose.model('Req', {
         required: true,
         ref: 'task'
     },
+    message:{
+        type:String,
+    }
     
     
 })

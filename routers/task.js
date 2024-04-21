@@ -110,6 +110,7 @@ router.post('/requesttask/:id', auth, async (req, res) => {
        for:req.params.id,
        to:tasks.owner,
        from:req.user.id,
+       message:req.body.message,
        
     
         
@@ -126,25 +127,6 @@ router.post('/requesttask/:id', auth, async (req, res) => {
     }
 })
 // router.post('/requesttask/:id', auth, async (req, res) => {
-//     const tasks = await Task.findById(req.params.id)
-//     const task = new Req({
-//        for:req.params.id,
-//        to:tasks.owner,
-//        from:req.user.id,
-       
-    
-        
-//     })
-//     console.log(task)
-//     req.status(200)
 
-//     try {
-//         await task.save()
-//         console.log(task)
-//         res.redirect('/tasks')
-//     } catch (e) {
-//         res.status(400).send(e)
-//     }
-// })
 
 module.exports = router
