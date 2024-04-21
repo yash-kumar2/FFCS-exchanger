@@ -11,7 +11,8 @@ router.post('/createtasks', auth, async (req, res) => {
     const task = new Task({
         ...req.body,
         owner: req.user._id,
-        contact:req.user.contact
+        contact:req.user.contact,
+        approved:false,
     })
 
     try {
@@ -111,12 +112,30 @@ router.post('/requesttask/:id', auth, async (req, res) => {
        to:tasks.owner,
        from:req.user.id,
        message:req.body.message,
+       approved:false,
        
     
         
     })
     console.log(task)
     //req.status(200)
+
+    try {
+        await task.save()
+        console.log(task)
+        res.redirect('/tasks')
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+router.patch('/approvereq/:id', auth, async (req, res) => {
+    const tasks = await Req.findById(req.params.id)
+    //tasks[approved]=true;
+    console.log(tasks)
+     tasks.approved=true;
+    tasks.save()
+    //res.send(200)
+   
 
     try {
         await task.save()

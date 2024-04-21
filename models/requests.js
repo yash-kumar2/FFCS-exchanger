@@ -19,7 +19,11 @@ const Requests = mongoose.model('Req', {
     },
     message:{
         type:String,
+    },
+    approved:{
+        type:Boolean,
     }
+    
     
     
 })

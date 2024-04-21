@@ -42,8 +42,12 @@ router.get('/users/dashboard',auth, async (req, res) => {
                 slot:task1.slot,
                 venue:task1.venue,
                 message:reqs[i].message,
+                id:reqs[i].id,
                 
             }
+            if(!reqs[i].approved)
+            requests.push(obj)
+
             
            
 
@@ -53,6 +57,72 @@ router.get('/users/dashboard',auth, async (req, res) => {
         console.log(obj)
         console.log("yash")
         res.render('requests.ejs',{tasks:requests})
+        
+        //const tasks = await Task.find({})
+       
+      
+    }
+        
+    
+    catch{
+    
+        res.redirect('/users/login');
+    }
+  });
+  router.get('/users/schedules',auth, async (req, res) => {
+    try{console.log(1111)
+        requests=[]
+        var reqs=await Req.find({to:req.user.id})
+         
+        for(var i=0;i<reqs.length;i++){
+            const task1=await Task.findById(reqs[i].for)
+            console.log(reqs[i])
+            console.log("sdf")
+            if(reqs[i].approved){
+             var user=await User.findById(reqs[i].to)
+            var obj={
+                from:user.regno,
+                contact:user.contact,
+                slot:task1.slot,
+                venue:task1.venue,
+                message:reqs[i].message,
+                
+            }
+            requests.push(obj)
+        }
+            
+           
+
+
+        }
+        
+        var reqs=await Req.find({from:req.user.id})
+         
+        for(var i=0;i<reqs.length;i++){
+            const task1=await Task.findById(reqs[i].for)
+            console.log(reqs[i])
+            console.log("sdf")
+            if(reqs[i].approved){
+             var user=await User.findById(reqs[i].to)
+            var obj={
+                from:user.regno,
+                contact:user.contact,
+                slot:task1.slot,
+                venue:task1.venue,
+                message:reqs[i].message,
+                
+            }
+            requests.push(obj)
+        }
+            
+           
+
+
+        }
+        
+        console.log(obj)
+        console.log("yash")
+        res.render('schedules.ejs',{tasks:requests})
         
         //const tasks = await Task.find({})
        
